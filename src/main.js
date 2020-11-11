@@ -38,6 +38,12 @@ import 'mint-ui/lib/style.css'
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 // import './lib/mui/js/mui.js'
+import './lib/css/golbal.css'
+
+
+//安装图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 
 //1.3导入自己的router.js路由模块
 import router from './router.js'

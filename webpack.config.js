@@ -13,7 +13,8 @@ module.exports = {
     hot:true,
     open:true,
     // open:true,
-    port:3000
+    port:3000,
+    // host:'10.100.240.18',
   },
     output:{
         path:path.resolve(__dirname,'dist'),     //指定，打包好的文件，输出到哪个目录中去
