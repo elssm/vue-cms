@@ -2,11 +2,12 @@
     <div>
 
         <!--轮播图区域-->
-        <mt-swipe :auto="4000">
+        <!-- <mt-swipe :auto="4000">
         <mt-swipe-item v-for="item in lunbotuList" :key="item.id">
             <img :src="item.img" alt="">
         </mt-swipe-item>
-        </mt-swipe>
+        </mt-swipe> -->
+        <swiper :lunbotuList="lunbotuList" :imgname="'img'" :isfull="true"></swiper>
 
 
         <!--九宫格到六宫格改造-->
@@ -36,8 +37,12 @@
 </template>
 
 <script>
+//导入自己封装的轮播图子组件
+import swiper from '../subcomponents/Swiper.vue'
 import {Toast} from 'mint-ui'
+import Swiper from '../subcomponents/Swiper.vue';
 export default {
+  components: { Swiper },
     data(){
         return{
             lunbotuList:[] //   保存轮播图的数组
@@ -60,32 +65,35 @@ export default {
                 }
             })
         }
-    }
+    },
+    components:{
+        swiper  //注册子组件
+        }
     
 }
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe{
-    height: 200px;
+// .mint-swipe{
+//     height: 200px;
 
-    .mint-swipe-item{
-        &:nth-child(1) {
-            background-color: red;
-        }
-        &:nth-child(2) {
-            background-color: blue;
-        }
-        &:nth-child(3) {
-            background-color: cyan;
-        }
+//     .mint-swipe-item{
+//         &:nth-child(1) {
+//             background-color: red;
+//         }
+//         &:nth-child(2) {
+//             background-color: blue;
+//         }
+//         &:nth-child(3) {
+//             background-color: cyan;
+//         }
 
-        img{
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
+//         img{
+//             width: 100%;
+//             height: 100%;
+//         }
+//     }
+// }
 
 .mui-grid-view.mui-grid-9{
     background-color: white;
