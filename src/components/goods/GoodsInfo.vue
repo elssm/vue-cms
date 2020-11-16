@@ -68,6 +68,7 @@
 <script>
 import nobox from '../subcomponents/goodsinfo_nobox.vue'
 import swiper from '../subcomponents/Swiper.vue'
+import {mapMutations} from 'vuex'
 export default {
     data() {
         return {
@@ -83,6 +84,7 @@ export default {
         this.getGoodsInfoById();
     },
     methods: {
+        ...mapMutations(["addToCar"]),
         async getlunbotu(){
             const {data} = await this.$http.get('api/getthumimages/'+ this.id);
             if(data.status === 0) return this.lunbotuList = data.message;
@@ -103,6 +105,11 @@ export default {
         addToCart(){
             //点击加入购物车
             this.flag = !this.flag;
+            //调用mutations中的addToCart
+            // this.$store.commit('addToCart',{id:this.id,count:this.selectedCount});
+
+            //直接调用mapMutations中映射出来的方法
+            this.addToCar({id:this.id,count:this.selectedCount});
         },
         beforeEnter(el){
           //动画开始之前，设置小球的起始状态  

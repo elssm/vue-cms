@@ -33,6 +33,18 @@ import MintUI from 'mint-ui'
 Vue.use(MintUI);
 import 'mint-ui/lib/style.css'
 
+// //创建store状态管理
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
+// const store = new Vuex.Store({
+//     state:{},
+//     mutations:{},
+//     getters:{},
+
+// })
+
+//导入状态管理对象
+import store from './store.js'
 
 //导入MUI样式
 import './lib/mui/css/mui.min.css'
@@ -55,5 +67,6 @@ import app from './App.vue'
 var vm =  new Vue({
     el:'#app',
     render:c=>c(app),
-    router //1.4挂载路由对象到VM实例上
+    router, //1.4挂载路由对象到VM实例上
+    store //挂载store
 })
