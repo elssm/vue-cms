@@ -3,10 +3,12 @@ import Vue from 'vue'
 //创建store状态管理
 import Vuex from 'vuex'
 Vue.use(Vuex)
+//每当初始化项目的时候，就先从localstorage中取一下数据
+let car = window.JSON.parse(localStorage.getItem('cart') || '[]')
 const store = new Vuex.Store({
     state:{
         //在cart中应该把每个商品存储为一个对象{id,count}
-        cart:[] //购物车数组
+        cart:car //购物车数组
     },
     mutations:{
         addToCar(state,goods){
@@ -24,6 +26,9 @@ const store = new Vuex.Store({
             if(!flag){
                 state.cart.push(goods)
             }
+
+            //为了持久化存储购物车的数据，可以把购物车的商品序列化出来存储到localstorage中
+            localStorage.setItem('cart',window.JSON.stringify(state.cart));
         }
     },
     getters:{
