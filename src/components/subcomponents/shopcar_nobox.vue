@@ -1,7 +1,7 @@
 <template>
     <div class="mui-numbox" data-numbox-min='1' style="height: 25px;">
         <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-        <input id="test" class="mui-input-numbox" type="number" value="1" ref="nobox" @change='countChanged'/>
+        <input id="test" class="mui-input-numbox" type="number" :value="initcount" ref="nobox" @change='countChanged'/>
         <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 		</div>
 </template>
@@ -25,6 +25,7 @@ export default {
             const val = this.$refs.nobox.value;
         }
     },
+    props:['initcount']
 }
 </script>
 

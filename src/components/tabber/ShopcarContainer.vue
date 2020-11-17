@@ -2,19 +2,20 @@
     <div class="shopcar-container">
         <div class="goods-list">
 
-            <div class="mui-card">
+            <div class="mui-card" v-for="item in goodslist"  :key="item.id">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner goods-item">
                         <!--开关-->
 						<mt-switch></mt-switch>
 
                         <!--图片-->
-                        <img src="../../images/menu1.png" alt="">
+                        <img :src="item.thumb_path" alt="">
                         <div class="info">
-                            <h1>小米Note 16G手机双网通版本</h1>
+                            <h1>{{item.title}}</h1>
                             <div class="goods-info">
-                                <span class="price">¥2199</span>
-                                <nobox></nobox>
+                                <span class="price">¥{{item.sell_price}}</span>
+                                <!--countObj['item.id']表示这条商品对应的数量-->
+                                <nobox :initcount="countObj[item.id]"></nobox>
                                 <a href="">删除</a>
                             </div>
                         </div>
@@ -41,15 +42,26 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import nobox from '../subcomponents/shopcar_nobox.vue'
 export default {
     data() {
         return {
-            
+            goodslist:[] //商品列表
         }
     },
+    created() {
+        this.getGoodsList();
+    },
     methods: {
-        
+        async getGoodsList(){
+            const {data} = await this.$http.get('api/goods/getshopcarlist/' + this.idstr);
+            // console.log(data)
+            if(data.status === 0) return (this.goodslist = data.message);
+        }
+    },
+    computed:{
+        ...mapGetters(['idstr','countObj'])
     },
     components:{
         nobox
