@@ -109,7 +109,7 @@ export default {
             // this.$store.commit('addToCart',{id:this.id,count:this.selectedCount});
 
             //直接调用mapMutations中映射出来的方法
-            this.addToCar({id:this.id,count:this.selectedCount});
+            this.addToCar({id:this.id,count:this.selectedCount,selected:true,price:this.goodsinfo.sell_price});
         },
         beforeEnter(el){
           //动画开始之前，设置小球的起始状态  

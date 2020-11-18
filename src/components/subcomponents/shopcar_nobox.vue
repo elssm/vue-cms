@@ -9,6 +9,7 @@
 <script>
 //导入mui从而支持初始化数字框
 import mui from '../../lib/mui/js/mui.js'
+import {mapMutations} from 'vuex'
 export default {
     data() {
         return {
@@ -22,10 +23,14 @@ export default {
     methods: {
         countChanged(){
             //获取选择的商品数量
-            const val = this.$refs.nobox.value;
-        }
+            const val = parseInt(this.$refs.nobox.value);
+            //调用Mutations方法，更新数量
+            this.updataGoodsCount({id:this.id,count:val})
+
+        },
+        ...mapMutations(['updataGoodsCount'])
     },
-    props:['initcount']
+    props:['initcount','id']
 }
 </script>
 

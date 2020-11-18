@@ -6,7 +6,7 @@
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner goods-item">
                         <!--开关-->
-						<mt-switch></mt-switch>
+						<mt-switch v-model="selectedObj[item.id]" @change="changeSelect(item.id,selectedObj[item.id])"></mt-switch>
 
                         <!--图片-->
                         <img :src="item.thumb_path" alt="">
@@ -15,8 +15,8 @@
                             <div class="goods-info">
                                 <span class="price">¥{{item.sell_price}}</span>
                                 <!--countObj['item.id']表示这条商品对应的数量-->
-                                <nobox :initcount="countObj[item.id]"></nobox>
-                                <a href="">删除</a>
+                                <nobox :initcount="countObj[item.id]" :id="item.id"></nobox>
+                                <a href="#" @click.prevent="del(item.id)">删除</a>
                             </div>
                         </div>
 					</div>
@@ -30,7 +30,7 @@
                         <div class="left">
                             <p>总计（不含运费）</p>
                             <p>
-                                已勾选商品<span class="danger">0</span>件，总价<span class="danger">¥0</span>
+                                已勾选商品<span class="danger">{{selectedcount}}</span>件，总价<span class="danger">{{amount}}</span>
                             </p>
                         </div>
                         <mt-button type="danger">去结算</mt-button>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapMutations} from 'vuex'
 import nobox from '../subcomponents/shopcar_nobox.vue'
 export default {
     data() {
@@ -54,14 +54,32 @@ export default {
         this.getGoodsList();
     },
     methods: {
+        ...mapMutations(['delFromCart','changeSelectState']),
         async getGoodsList(){
+            if(this.idstr.length<=0) return;
             const {data} = await this.$http.get('api/goods/getshopcarlist/' + this.idstr);
             // console.log(data)
             if(data.status === 0) return (this.goodslist = data.message);
+        },
+        del(id){
+            //删除商品
+            this.goodslist.some((item,i)=>{
+                if(item.id == id){
+                    this.goodslist.splice(i,1)
+                    return true
+                }
+            })
+            //从vuex中删除数据
+            this.delFromCart(id);
+        },
+        changeSelect(id,select){
+            //更改开关的状态
+            // console.log(id + '----' + select)
+            this.changeSelectState({id,selected:select})
         }
     },
     computed:{
-        ...mapGetters(['idstr','countObj'])
+        ...mapGetters(['idstr','countObj','selectedObj','selectedcount','amount'])
     },
     components:{
         nobox
